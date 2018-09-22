@@ -17,8 +17,7 @@ import { mapState } from 'vuex'
 export default {
   name: 'counter',
   mounted () {
-    console.log('dispatching getContractInstance')
-    this.$store.dispatch('getContractInstance')
+    console.log('main is mounted')
   },
   data () {
     return {
@@ -30,8 +29,15 @@ export default {
   computed: mapState({
     isInjected: state => state.web3.isInjected,
     contractInstance: state => state.contractInstance,
+    networkId: state => state.web3.networkId,
   }),
   watch: {
+    networkId (current, prev) {
+      if (!prev && current) {
+        // This requires networkId
+        this.$store.dispatch('getContractInstance')
+      }
+    },
     contractInstance (instance, prevInstance) {
       if (!prevInstance && instance) {
         this.loadValue()
@@ -49,7 +55,6 @@ export default {
       })
     },
     handleClick (event) {
-      console.log('clicked', event.target.innerHTML)
       this.event = null
       this.pending = true
       this.contractInstance().increment({
@@ -64,7 +69,7 @@ export default {
           const Increment = this.contractInstance().Increment()
           Increment.watch((err, result) => {
             if (err) {
-              console.log('could not get event Won()')
+              console.log(err)
             } else {
               this.event = result.args
               this.value = parseInt(result.args._value)

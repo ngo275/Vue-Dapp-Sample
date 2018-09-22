@@ -36,4 +36,8 @@ export const ABI = [
 	}
 ]
 
-export const address = '0xfc1a2c84cf30f93263a3676e05d48cdd07a217bd'
+export const Addresses = {
+	'3': '0x5dca66ce30182e0b5d438fd892c463a3ca63cdb6',
+	'4': '0x3df8237c1c963e5bc0310084163f7226f2dcf273',
+	'42': '0xfc1a2c84cf30f93263a3676e05d48cdd07a217bd',
+}
